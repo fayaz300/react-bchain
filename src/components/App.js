@@ -1,15 +1,22 @@
 import '../styles/App.css';
-import Menu from './Menu';
 import {useState, useEffect} from 'react';
-// import {CONTRACT_ABI, CONTRACT_ADDRESS} from '../config';
+import Menu from './Menu';
+import PhlebotomistForm from './PhlebotomistForm';
 
 function App() {
   const [accountDetails, setAccountDetails] = useState({account: null, isLogged: false});
+  const [mainContent, setMainContent] = useState("allBloodUnits");
+  
 
+  const mainContentChange = (childData) => {
+    setMainContent(childData);
+  };
+  
 
   return (
     <div className="ui container">
-      <Menu accountDetails={accountDetails}/>
+      <Menu accountDetails={accountDetails} mainContentChange={mainContentChange}/>
+      {mainContent === "phlebotomistForm" && <PhlebotomistForm />}
     </div>
   );
 }

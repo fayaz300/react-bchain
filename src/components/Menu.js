@@ -2,10 +2,20 @@ const Menu = (props) => {
   return (
     <div className="ui secondary menu">
       <div className="item">
-        <button className="ui compact button black">Show All</button>
+        <button
+          className="ui button compact black"
+          onClick={() => props.mainContentChange("allBloodUnits")}
+        >
+          Show All
+        </button>
       </div>
       <div className="item">
-        <button className="ui compact button black">Make New</button>
+        <button
+          className="ui compact button black"
+          onClick={() => props.mainContentChange("phlebotomistForm")}
+        >
+          Make New
+        </button>
       </div>
       <div className="right menu">
         <div className="item">
