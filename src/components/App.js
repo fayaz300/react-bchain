@@ -26,10 +26,6 @@ function App() {
 
       const allBloodPacketHashes = await bloodContract.methods.getAllBloodPacketHashes().call();
       setAllBloodPacketHashes(allBloodPacketHashes);
-      // for (var i = 1; i <= counter; i++) {
-      //   const contact = await contactList.methods.contacts(i).call();
-      //   setContacts((contacts) => [...contacts, contact]);
-      // }
     }
 
     load();
@@ -45,7 +41,7 @@ function App() {
       <Menu accountDetails={accountDetails} mainContentChange={mainContentChange}/>
       {accountDetails.isLogged && <h3>You are logged in as : {accountDetails.account}</h3>}
       {mainContent === "allBloodUnits" && <AllBloodUnits allBloodPacketHashes = {allBloodPacketHashes}/>}
-      {mainContent === "phlebotomistForm" && <PhlebotomistForm />}
+      {mainContent === "phlebotomistForm" && <PhlebotomistForm bloodContract={bloodContract} accountDetails = {accountDetails}/>}
     </div>
   );
 }

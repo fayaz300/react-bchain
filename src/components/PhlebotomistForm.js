@@ -1,11 +1,34 @@
 import { useState } from "react";
 
-const PhlebotomistForm = () => {
+const PhlebotomistForm = (props) => {
   const [serialNum, setSerialNum] = useState('');
   const [donorId, setDonorId] = useState('');
   const [collectedDate, setCollectedDate] = useState('');
   const [collectedLocation, setCollectedLocation] = useState('');
+  const [txRes, setTxRes] = useState('');
 
+  function handleAddBloodUnit() {
+    const _serialNum = serialNum;
+    const _donorId = donorId;
+    const _collectedDate = collectedDate;
+    const _collectedLocation = collectedLocation;
+
+    async function addBloodUnit() {
+      const account = props.accountDetails.account;
+      const bloodContract = props.bloodContract;
+      
+      const tx = await bloodContract.methods.makeBloodPacket(_serialNum, _donorId, _collectedDate, _collectedLocation).send(
+        {
+          from: account,
+          gas: '500000',
+        }
+      )
+      setTxRes(txRes);
+      console.log(tx);
+    }
+    
+    addBloodUnit();
+  }
   return (
     <div className="ui main">
       <form className="ui form" onSubmit={(e) => e.preventDefault()}>
@@ -53,8 +76,9 @@ const PhlebotomistForm = () => {
             onChange={(e) => setCollectedLocation(e.target.value)}
           />
         </div>
-        <button className="ui button compact blue">Add to Blockchain</button>
+        <button className="ui button compact blue" onClick={handleAddBloodUnit}>Add to Blockchain</button>
       </form>
+      {txRes !== '' && <h5>{txRes}</h5>}
     </div>
   );
 };
