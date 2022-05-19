@@ -2,6 +2,7 @@ import '../styles/App.css';
 import {useState, useEffect} from 'react';
 import Menu from './Menu';
 import PhlebotomistForm from './PhlebotomistForm';
+import { AllBloodUnits } from './AllBloodUnits';
 
 function App() {
   const [accountDetails, setAccountDetails] = useState({account: null, isLogged: false});
@@ -16,6 +17,7 @@ function App() {
   return (
     <div className="ui container">
       <Menu accountDetails={accountDetails} mainContentChange={mainContentChange}/>
+      {mainContent === "allBloodUnits" && <AllBloodUnits />}
       {mainContent === "phlebotomistForm" && <PhlebotomistForm />}
     </div>
   );
