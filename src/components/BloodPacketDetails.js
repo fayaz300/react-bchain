@@ -1,0 +1,71 @@
+import { useState } from "react";
+
+const BloodPacketDetails = (props) => {
+  const [bloodPacketDetails, setBloodPacketDetails] = useState({});
+  const [allLocations, setAllLocations] = useState([]);
+  const [location, setLocation] = useState('');
+  const bpHash = props.bpHash;
+  const bloodContract = props.bloodContract;
+  const account = props.accountDetails.account;
+  const statusFinder = {
+    0: "NotReady",
+    1: "ReadyforDelivery",
+    2: "StartDelivery",
+    3: "OnTrack",
+    4: "EndDelivery",
+    5: "Deposited",
+    6: "ReadyForSupply",
+    7: "Received"
+  }
+
+  bloodContract.methods
+    .getAllBloodPackets(bpHash)
+    .call()
+    .then((data) => {
+      setBloodPacketDetails({
+        phlebotomist: data.phlebotomist,
+        serialNumber: data.serialNumber,
+        donorId: data.donorId,
+        collectedDate: data.collectedDate,
+        collectedLocation: data.collectedLocation,
+        rawStatus: data.status,
+        currentStatus: statusFinder[data.status],
+        currentOwner: data.owner,
+      });
+    });
+
+  bloodContract.methods.getAllLocations(bpHash).call().then( (data) => {setAllLocations(data)})
+  
+  return (
+    <>
+      <div>
+        <h4>Blood Unit Details:</h4>
+        <p>hash: {props.bpHash}</p>
+        <p><span className="font-weight-bold">Phlebotomist: </span>{bloodPacketDetails.phlebotomist}</p>
+        <p><span className="font-weight-bold">Serial Number: </span>{bloodPacketDetails.serialNumber}</p>
+        <p><span className="font-weight-bold">Donor Id: </span>{bloodPacketDetails.donorId}</p>
+        <p><span className="font-weight-bold">Collected Date: </span> {bloodPacketDetails.collectedDate}</p>
+        <p><span className="font-weight-bold">Collected Location: </span> {bloodPacketDetails.collectedLocation}</p>
+        <p><span className="font-weight-bold">Current Statu:s </span>{bloodPacketDetails.currentStatus}</p>
+        <p><span className="font-weight-bold">Current Owner: </span> {bloodPacketDetails.currentOwner}</p>
+      </div>
+      <div className="ui secondary menu">
+        <form className="ui form">
+          <div className="ui item">
+            <label htmlFor="location">Location:</label><br />
+            <input type="text" onChange={(e) => setLocation(e.target.value)}></input>
+          </div>
+        </form>
+        <div className="item">
+          <button className="ui button compact positive" >Update Status</button>
+        </div>
+      </div>
+      <div>
+        <h4>Blood Unit History: </h4>
+        <div className="item">{allLocations}</div>
+      </div>
+    </>
+  );
+};
+
+export default BloodPacketDetails;

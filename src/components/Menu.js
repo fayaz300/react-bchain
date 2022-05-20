@@ -9,21 +9,21 @@ const Menu = (props) => {
           Show All
         </button>
       </div>
-      <div className="item">
+      { props.accountDetails.isPhlebotomist && <div className="item">
         <button
           className="ui compact button black"
           onClick={() => props.mainContentChange("phlebotomistForm")}
         >
           Make New
         </button>
-      </div>
+      </div>}
       <div className="right menu">
         <div className="item">
           {!props.accountDetails.isLogged && (
             <button className="ui positive button">Connect Metamask</button>
           )}
           {props.accountDetails.isLogged && (
-            <button className="ui positive button">Disconnect Metamask</button>
+            <button className="ui positive button" onClick={() => props.disconnectWallet()}>Disconnect Metamask</button>
           )}
         </div>
       </div>
