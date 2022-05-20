@@ -34,8 +34,28 @@ const BloodPacketDetails = (props) => {
       });
     });
 
-  bloodContract.methods.getAllLocations(bpHash).call().then( (data) => {setAllLocations(data)})
+  bloodContract.methods.getAllLocations(bpHash).call().then( (data) => {setAllLocations(data); alert(Object.keys(data))})
   
+  function clickHandler() {
+    const date = new Date().toJSON().split("T")[0];
+    const loc = location;
+    const rawStatus = bloodPacketDetails.rawStatus;
+    async function updateStatus() {
+      console.log(typeof rawStatus)
+      if (rawStatus === "0") {
+        // call makeReadyForDelivery method;
+        const res = await bloodContract.methods.makeReadyForDelivery(bpHash).send({from:account, gas: 500000})
+        console.log(res);
+      }
+      else if (rawStatus === "1") {
+        // call makeReadyForDelivery method;
+        const res = await bloodContract.methods.startDelivery(bpHash, date, loc).send({from:account, gas: 500000})
+        console.log(res);
+      }
+      // TODO implement remaining
+    }
+    updateStatus();
+  }
   return (
     <>
       <div>
@@ -57,7 +77,7 @@ const BloodPacketDetails = (props) => {
           </div>
         </form>
         <div className="item">
-          <button className="ui button compact positive" >Update Status</button>
+          <button className="ui button compact positive" onClick={clickHandler}>Update Status</button>
         </div>
       </div>
       <div>

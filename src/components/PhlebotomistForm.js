@@ -57,7 +57,7 @@ const PhlebotomistForm = (props) => {
         <div className="field">
           <label htmlFor="collectedDate">Collected Date-Time:</label>
           <input
-            type="datetime-local"
+            type="date"
             id="collectedDate"
             name="collectedDate"
             placeholder="Enter Date-Time"

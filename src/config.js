@@ -1,4 +1,4 @@
-export const CONTACT_ADDRESS = '0x8ffCeC49Fa23ad1f8A39f021d3689dbA65Ee98E4'
+export const CONTACT_ADDRESS = '0x1Fef2ff58f280E0114fbB3FD312a105Eb712a0Dc'
 
 export const CONTACT_ABI = [
 	{
@@ -222,7 +222,7 @@ export const CONTACT_ABI = [
 				"type": "string"
 			}
 		],
-		"name": "endDelivery",
+		"name": "endFinalDelivery",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
