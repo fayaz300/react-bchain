@@ -15,7 +15,9 @@ const BloodPacketDetails = (props) => {
     4: "EndDelivery",
     5: "Deposited",
     6: "ReadyForSupply",
-    7: "Received"
+    7: "OnTrackToHospital",
+    8: "EndFinalDelivery",
+    9: "Received"
   }
 
   bloodContract.methods
@@ -56,13 +58,43 @@ const BloodPacketDetails = (props) => {
       if (rawStatus === "0") {
         // call makeReadyForDelivery method;
         const res = await bloodContract.methods.makeReadyForDelivery(bpHash).send({from:account, gas: 500000})
-        console.log(res);
+        // console.log(res);
       }
       else if (rawStatus === "1") {
-        // call makeReadyForDelivery method;
+        // call startDelivery method;
         const res = await bloodContract.methods.startDelivery(bpHash, date, loc).send({from:account, gas: 500000})
-        console.log(res);
+        // console.log(res);
       }
+      else if (rawStatus === "2") {
+        
+        const res = await bloodContract.methods.updateDeliveryStatus(bpHash, date, loc).send({from:account, gas: 500000})
+        // console.log(res);
+      }
+      // else if (rawStatus === "3") {
+        
+      //   const res = await bloodContract.methods.endDelivery(bpHash, date, loc).send({from:account, gas: 500000})
+      //   // console.log(res);
+      // }
+      // else if (rawStatus === "4") {
+        
+      //   const res = await bloodContract.methods.makeReadyForSupply(bpHash, date, loc).send({from:account, gas: 500000})
+      //   console.log(res);
+      // }
+      // else if (rawStatus === "5") {
+        
+      //   const res = await bloodContract.methods.startDistribution(bpHash, date, loc).send({from:account, gas: 500000})
+      //   console.log(res);
+      // }
+      // else if (rawStatus === "6") {
+        
+      //   const res = await bloodContract.methods.endFinalDelivery(bpHash, date, loc).send({from:account, gas: 500000})
+      //   console.log(res);
+      // }
+      // else if (rawStatus === "7") {
+        
+      //   const res = await bloodContract.methods.receivedBloodPacket(bpHash, date, loc).send({from:account, gas: 500000})
+      //   console.log(res);
+      // }
       // TODO implement remaining
     }
     updateStatus();
