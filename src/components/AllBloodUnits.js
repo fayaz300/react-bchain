@@ -21,6 +21,7 @@ export const AllBloodUnits = (props) => {
 
   return (
     <div>
+      <h1 className="header">All Blood Units:</h1>
       <div className="ui relaxed divided list">{allBloodPacketHashes}</div>
     </div>);
 };

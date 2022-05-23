@@ -34,7 +34,18 @@ const BloodPacketDetails = (props) => {
       });
     });
 
-  bloodContract.methods.getAllLocations(bpHash).call().then( (data) => {setAllLocations(data); alert(Object.keys(data))})
+  bloodContract.methods.getAllLocations(bpHash).call().then( (data) => {
+    const arr = data.map( item => {
+      return (
+        <div className="item" key={item}>
+          <div className="content">
+            <span className="header ">{item}</span>
+          </div>
+        </div>
+      )
+    });
+    setAllLocations(arr);
+  })
   
   function clickHandler() {
     const date = new Date().toJSON().split("T")[0];
@@ -66,7 +77,7 @@ const BloodPacketDetails = (props) => {
         <p><span className="font-weight-bold">Donor Id: </span>{bloodPacketDetails.donorId}</p>
         <p><span className="font-weight-bold">Collected Date: </span> {bloodPacketDetails.collectedDate}</p>
         <p><span className="font-weight-bold">Collected Location: </span> {bloodPacketDetails.collectedLocation}</p>
-        <p><span className="font-weight-bold">Current Statu:s </span>{bloodPacketDetails.currentStatus}</p>
+        <p><span className="font-weight-bold">Current Status: </span>{bloodPacketDetails.currentStatus}</p>
         <p><span className="font-weight-bold">Current Owner: </span> {bloodPacketDetails.currentOwner}</p>
       </div>
       <div className="ui secondary menu">
